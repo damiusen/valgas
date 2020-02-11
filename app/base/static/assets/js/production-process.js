@@ -1,5 +1,5 @@
-
-var jsondata
+var valveflag = true;
+var jsondata;
 $.getJSON("/static/assets/production-process.json", function(json){
   jsondata = json;
 })
@@ -106,6 +106,7 @@ function init() {
       "toolManager.hoverDelay": 10,  // how quickly tooltips are shown
       initialAutoScale: go.Diagram.Uniform,  // scale to show all of the contents
       "ChangedSelection": onSelectionChanged, // view additional information
+      "ObjectDoubleClicked": onSelectionDoubleClicked
     });
 
   function infoString(obj) {
@@ -257,3 +258,29 @@ function onSelectionChanged(e) {
 
 }
 
+function onSelectionDoubleClicked(e) {
+  var node = e.diagram.selection.first();
+  if (!(node instanceof go.Node)) return;
+  var data = node.data;
+  if(data.type == "valve"){
+    valveStrategy();
+  }
+}
+
+function valveStrategy() {
+  if(valveflag){
+    $.getJSON("/static/assets/production-process_2.json", function(json){
+      myDiagram.animationManager.initialAnimationStyle = go.AnimationManager.None;
+      myDiagram.model = go.Model.fromJson(json);
+    });
+    valveflag = false;
+  } else {
+    $.getJSON("/static/assets/production-process.json", function(json){
+      myDiagram.animationManager.initialAnimationStyle = go.AnimationManager.None;
+      myDiagram.model = go.Model.fromJson(json);
+    })
+    valveflag = true;
+  }
+  
+  
+}
