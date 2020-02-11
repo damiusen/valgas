@@ -1,0 +1,29 @@
+{% extends "base-site.html" %}
+
+{% block title %} Maps {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<body onload="init()">
+  <div id="sample">
+    <div style="width:100%">
+        <div id="myDiagramDiv" style="border: solid 1px black; width:70%; height:550px; display: inline-block; vertical-align: top"></div>
+        <div id="infobox" style="display: inline-block; vertical-align: top;">
+          <img id="Image" width="216" alt="" src=""/>
+        </div>
+    </div>
+  </div>
+  </body>
+
+  {% endblock content %}
+  {% block javascripts %}
+    <script src="https://gojs.net/latest/release/go.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <script src="/static/assets/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- page application js -->
+    <script src="/static/assets/js/production-process.js"></script>
+
+{% endblock javascripts %}
